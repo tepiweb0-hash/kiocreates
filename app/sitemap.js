@@ -7,7 +7,9 @@ export default async function sitemap() {
   const posts = await getSitemapPosts();
   const staticPages = [
     { url: `${base}/`, priority: 1, changeFrequency: 'daily' },
+    { url: `${base}/writings`, priority: 0.8, changeFrequency: 'weekly' },
     { url: `${base}/projects`, priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${base}/books`, priority: 0.8, changeFrequency: 'weekly' },
     { url: `${base}/about`, priority: 0.6, changeFrequency: 'monthly' }
   ];
   return [
@@ -16,7 +18,7 @@ export default async function sitemap() {
       url: `${base}/post/${post.slug}`,
       lastModified: post.updated_at || post.published_at,
       changeFrequency: 'monthly',
-      priority: post.type === 'project' ? 0.8 : 0.7
+      priority: ['project', 'writing', 'article', 'book'].includes(post.type) ? 0.8 : 0.7
     }))
   ];
 }

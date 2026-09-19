@@ -5,7 +5,7 @@ import PostCard from './PostCard';
 import CtaCard from './CtaCard';
 import { mixFeed } from '../lib/feed';
 
-export default function Feed({ initialPosts, ctas, settings, seed, category = '' }) {
+export default function Feed({ initialPosts, ctas, settings, seed }) {
   const [posts, setPosts] = useState(initialPosts);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(initialPosts.length >= 12);
@@ -18,7 +18,6 @@ export default function Feed({ initialPosts, ctas, settings, seed, category = ''
     setLoading(true);
     try {
       const params = new URLSearchParams({ offset: String(posts.length), limit: '12' });
-      if (category) params.set('category', category);
       const res = await fetch(`/api/feed?${params.toString()}`);
       const data = await res.json();
       const next = data.posts || [];
@@ -36,10 +35,10 @@ export default function Feed({ initialPosts, ctas, settings, seed, category = ''
     }, { rootMargin: '500px' });
     observer.observe(sentinel.current);
     return () => observer.disconnect();
-  }, [posts.length, hasMore, loading, category]);
+  }, [posts.length, hasMore, loading]);
 
   if (!posts.length) {
-    return <div className="emptyState">No published posts here yet. Check back soon.</div>;
+    return <div className="emptyState">No published posts yet. Check back soon.</div>;
   }
 
   return (

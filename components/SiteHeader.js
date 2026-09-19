@@ -7,7 +7,9 @@ export default function SiteHeader({ brand = 'kiocreates.' }) {
         <Link href="/" className="brand">{brand}</Link>
         <nav className="topnav" aria-label="Main navigation">
           <Link href="/">Feed</Link>
+          <Link href="/writings">Writings</Link>
           <Link href="/projects">Projects</Link>
+          <Link href="/books">Books</Link>
           <Link href="/about">About</Link>
         </nav>
       </div>

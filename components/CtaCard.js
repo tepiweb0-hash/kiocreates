@@ -13,14 +13,13 @@ export default function CtaCard({ cta }) {
   }, [cta.id]);
 
   return (
-    <article className="feedCard ctaCard">
+    <article className="feedCard postCard ctaCard">
       <div className="cardHeader">
-        <div className="avatar promotedAvatar" aria-hidden="true">K</div>
+        <div className="avatar" aria-hidden="true">K</div>
         <div className="identity">
           <strong className="author">kiocreates.</strong>
           <div className="meta">Promoted · Public</div>
         </div>
-        <span className="pill promotedPill">CTA</span>
       </div>
       <div className="ctaCopy">
         <h2>{cta.headline}</h2>
@@ -31,12 +30,12 @@ export default function CtaCard({ cta }) {
           ? <video className="ctaMedia" controls preload="metadata" src={cta.media.public_url} />
           : <img className="ctaMedia" src={cta.media.public_url} alt={cta.media.alt_text || ''} loading="lazy" />
       ) : null}
-      <div className="ctaActionRow">
+      <div className="cardFooter ctaActionRow">
         <a
           href={cta.button_url}
-          className="primaryButton"
+          className="actionLink"
           onClick={() => trackEvent('cta_click', 'cta', cta.id, window.location.pathname)}
-        >{cta.button_label}</a>
+        >{cta.button_label} →</a>
       </div>
     </article>
   );

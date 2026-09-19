@@ -5,13 +5,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kiocreates.vercel.a
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'kiocreates.', template: '%s | kiocreates.' },
-  description: 'A creator feed of things Kio makes, builds, and learns.',
+  description: 'A one-person social publishing feed for Kio’s posts, writings, projects, books, photos, and updates.',
   applicationName: 'kiocreates.',
   openGraph: {
     type: 'website',
     siteName: 'kiocreates.',
     title: 'kiocreates.',
-    description: 'A creator feed of things Kio makes, builds, and learns.',
+    description: 'Posts, writings, projects, books, photos, and updates from Kio in one feed.',
     url: siteUrl
   },
   twitter: { card: 'summary_large_image' },

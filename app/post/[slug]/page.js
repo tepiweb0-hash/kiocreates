@@ -5,7 +5,7 @@ import MediaGrid from '../../../components/MediaGrid';
 import ShareActions from '../../../components/ShareActions';
 import PostViewTracker from '../../../components/PostViewTracker';
 import { getPostBySlug, getSiteSettings } from '../../../lib/data';
-import { formatDate, postDescription, postTitle } from '../../../lib/format';
+import { formatDate, postDescription, postTitle, postTypeLabel } from '../../../lib/format';
 
 export const revalidate = 60;
 
@@ -38,7 +38,7 @@ export default async function PostPage({ params }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kiocreates.vercel.app';
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': post.type === 'article' ? 'Article' : 'SocialMediaPosting',
+    '@type': ['article', 'writing'].includes(post.type) ? 'Article' : 'SocialMediaPosting',
     headline: title,
     articleBody: post.caption,
     datePublished: post.published_at,
@@ -58,7 +58,7 @@ export default async function PostPage({ params }) {
               <strong className="author">{settings.brand_name}</strong>
               <div className="meta">{formatDate(post.published_at)} · Public</div>
             </div>
-            {post.category?.name ? <span className="pill">{post.category.name}</span> : null}
+            {postTypeLabel(post.type) !== 'Post' ? <span className="pill">{postTypeLabel(post.type)}</span> : null}
           </div>
           {post.title ? <h1 className="detailTitle">{post.title}</h1> : null}
           <div className="detailCaption">{post.caption}</div>
@@ -66,6 +66,13 @@ export default async function PostPage({ params }) {
           {post.type === 'project' && Object.keys(post.project_meta || {}).length ? (
             <div className="projectDetails">
               {Object.entries(post.project_meta).filter(([,value]) => value).map(([key,value]) => (
+                <div key={key}><span>{key.replaceAll('_',' ')}</span><strong>{String(value)}</strong></div>
+              ))}
+            </div>
+          ) : null}
+          {post.type === 'book' && Object.keys(post.content_meta || {}).length ? (
+            <div className="projectDetails">
+              {Object.entries(post.content_meta).filter(([,value]) => value).map(([key,value]) => (
                 <div key={key}><span>{key.replaceAll('_',' ')}</span><strong>{String(value)}</strong></div>
               ))}
             </div>

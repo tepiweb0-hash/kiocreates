@@ -6,7 +6,7 @@ export const revalidate = 60;
 
 export const metadata = {
   title: 'Projects',
-  description: 'Selected projects and build notes from Kiocreates.',
+  description: 'Projects and project updates from the Kiocreates feed.',
   alternates: { canonical: '/projects' }
 };
 
@@ -16,7 +16,7 @@ export default async function ProjectsPage() {
     <>
       <SiteHeader brand={settings.brand_name} />
       <main className="singlePageShell wide">
-        <div className="pageIntro"><span className="eyebrow">PROJECTS</span><h1>Things I’ve built.</h1><p>Selected work, experiments, and build notes from the feed.</p></div>
+        <div className="pageIntro"><span className="eyebrow">PROJECTS</span><h1>Projects from the feed.</h1><p>Builds, client work, experiments, and project updates published by Kio.</p></div>
         <div className="feedStack">
           {posts.length ? posts.map((post) => <PostCard key={post.id} post={post} compact />) : <div className="emptyState">No published projects yet.</div>}
         </div>
