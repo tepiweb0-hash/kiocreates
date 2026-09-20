@@ -2,51 +2,29 @@
 
 import Link from 'next/link';
 import MediaGrid from './MediaGrid';
-import ShareActions from './ShareActions';
-import { formatDate, postTypeLabel } from '../lib/format';
+import PostActions from './PostActions';
+import { formatDate } from '../lib/format';
 
-export default function PostCard({ post, compact = false }) {
+export default function PostCard({ post, compact = false, settings = {} }) {
   const href = `/post/${post.slug}`;
-  const typeLabel = postTypeLabel(post.type);
+  const author = String(settings.brand_name || 'kiocreates').replace(/\.$/, '');
   return (
-    <article className={`feedCard postCard type-${post.type || 'post'}`}>
-      <div className="cardHeader">
-        <div className="avatar" aria-hidden="true">K</div>
+    <article className={`feedCard postCard facebookPost type-${post.type || 'post'}`}>
+      <div className="cardHeader facebookHeader">
+        <div className="avatar facebookAvatar" aria-hidden="true">K</div>
         <div className="identity">
-          <Link href={href} className="author">kiocreates.</Link>
-          <div className="meta">{formatDate(post.published_at)} · Public</div>
+          <a href="https://facebook.com/kiocreates" target="_blank" rel="noreferrer" className="author facebookAuthor">{author}</a>
+          <Link href={href} className="meta facebookMeta">{formatDate(post.published_at)} · <span aria-label="Public">◉</span></Link>
         </div>
-        {typeLabel !== 'Post' ? <span className="pill">{typeLabel}</span> : null}
+        <button className="postMenuButton" aria-label="Post menu" type="button">•••</button>
       </div>
 
-      <Link href={href} className="postBodyLink">
-        {post.title ? <h2 className="postTitle">{post.title}</h2> : null}
-        <p className={`caption ${compact ? 'clamp' : ''}`}>{post.caption}</p>
-        {compact && ['writing', 'article', 'book'].includes(post.type) ? <span className="readMore">Continue reading →</span> : null}
+      <Link href={href} className="facebookCaptionLink">
+        <p className={`caption facebookCaption ${compact ? 'clamp' : ''}`}>{post.caption}</p>
       </Link>
 
       <MediaGrid media={post.media} cover={post.cover} />
-
-      {post.type === 'project' && post.project_meta?.client ? (
-        <div className="projectStrip">
-          <span>Project</span>
-          <strong>{post.project_meta.client}</strong>
-          {post.project_meta.project_type ? <small>{post.project_meta.project_type}</small> : null}
-        </div>
-      ) : null}
-
-      {post.type === 'book' && (post.content_meta?.book_title || post.content_meta?.chapter_label) ? (
-        <div className="projectStrip contentStrip">
-          <span>{post.content_meta?.entry_type || 'Book'}</span>
-          <strong>{post.content_meta?.book_title || post.title}</strong>
-          {post.content_meta?.chapter_label ? <small>{post.content_meta.chapter_label}</small> : null}
-        </div>
-      ) : null}
-
-      <div className="cardFooter">
-        <Link href={href} className="actionLink">Open post</Link>
-        <ShareActions post={post} compact />
-      </div>
+      <PostActions post={post} authorName={author} />
     </article>
   );
 }

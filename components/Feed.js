@@ -44,7 +44,7 @@ export default function Feed({ initialPosts, ctas, settings, seed }) {
   return (
     <div className="feedStack">
       {items.map((item, index) => item.kind === 'post'
-        ? <PostCard key={`p-${item.data.id}`} post={item.data} compact />
+        ? <PostCard key={`p-${item.data.id}`} post={item.data} compact settings={settings} />
         : <CtaCard key={`c-${item.data.id}-${index}`} cta={item.data} />
       )}
       <div ref={sentinel} className="feedSentinel" aria-hidden="true" />

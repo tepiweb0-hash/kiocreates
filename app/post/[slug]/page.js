@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import SiteHeader from '../../../components/SiteHeader';
 import MediaGrid from '../../../components/MediaGrid';
-import ShareActions from '../../../components/ShareActions';
+import PostActions from '../../../components/PostActions';
 import PostViewTracker from '../../../components/PostViewTracker';
 import { getPostBySlug, getSiteSettings } from '../../../lib/data';
-import { formatDate, postDescription, postTitle, postTypeLabel } from '../../../lib/format';
+import { formatDate, postDescription, postTitle } from '../../../lib/format';
 
 export const revalidate = 60;
 
@@ -52,15 +52,14 @@ export default async function PostPage({ params }) {
       <main className="singlePageShell">
         <Link href="/" className="backLink">← Back to feed</Link>
         <article className="feedCard postDetail">
-          <div className="cardHeader">
-            <div className="avatar">K</div>
+          <div className="cardHeader facebookHeader">
+            <div className="avatar facebookAvatar">K</div>
             <div className="identity">
-              <strong className="author">{settings.brand_name}</strong>
-              <div className="meta">{formatDate(post.published_at)} · Public</div>
+              <strong className="author facebookAuthor">{String(settings.brand_name || 'kiocreates').replace(/\.$/, '')}</strong>
+              <div className="meta facebookMeta">{formatDate(post.published_at)} · <span aria-label="Public">◉</span></div>
             </div>
-            {postTypeLabel(post.type) !== 'Post' ? <span className="pill">{postTypeLabel(post.type)}</span> : null}
+            <button className="postMenuButton" aria-label="Post menu" type="button">•••</button>
           </div>
-          {post.title ? <h1 className="detailTitle">{post.title}</h1> : null}
           <div className="detailCaption">{post.caption}</div>
           <MediaGrid media={post.media} cover={post.cover} />
           {post.type === 'project' && Object.keys(post.project_meta || {}).length ? (
@@ -77,7 +76,7 @@ export default async function PostPage({ params }) {
               ))}
             </div>
           ) : null}
-          {post.facebook_share_enabled ? <ShareActions post={post} /> : null}
+          <PostActions post={post} authorName={String(settings.brand_name || 'kiocreates').replace(/\.$/, '')} />
         </article>
       </main>
       <PostViewTracker postId={post.id} slug={post.slug} />
