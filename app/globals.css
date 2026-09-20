@@ -11,3 +11,45 @@
 .facebookPost{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.12);border:1px solid #dddfe2;background:#fff}.facebookHeader{padding:12px 16px 8px}.facebookAvatar{width:40px;height:40px;border-radius:50%;font-size:16px;background:#645cff}.facebookAuthor{font-size:15px;font-weight:700;color:#050505}.facebookMeta{display:block;font-size:12px;color:#65676b;margin-top:2px}.postMenuButton{border:0;background:transparent;color:#65676b;font-size:20px;line-height:1;padding:8px 7px;border-radius:50%;letter-spacing:1px}.postMenuButton:hover{background:#f0f2f5}.facebookCaptionLink{display:block;padding:2px 16px 12px}.facebookCaption{font-size:15px;line-height:1.38;margin:0;color:#050505}.facebookCaption.clamp{-webkit-line-clamp:6}.facebookPost .mediaGrid{background:#f0f2f5}.facebookPost .mediaCell{min-height:260px}.reactionSummary{min-height:36px;padding:6px 16px 5px;display:flex;align-items:center;gap:6px;border-bottom:1px solid transparent;color:#65676b;font-size:13px}.reactionSummary.show{border-bottom-color:#e4e6eb}.reactionBubble{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#f55368;color:#fff;font-size:12px;line-height:1}.fbActionRow{display:grid;grid-template-columns:repeat(3,1fr);padding:4px 12px;border-top:1px solid #e4e6eb}.fbAction{border:0;background:transparent;color:#65676b;min-height:42px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:14px;font-weight:650}.fbAction:hover{background:#f0f2f5}.fbAction:disabled{opacity:.6}.fbAction.liked{color:#e41e3f}.actionIcon{font-size:22px;line-height:1}.commentIcon{font-size:19px}.postActionStatus{text-align:center;padding:0 12px 8px;color:#65676b;font-size:12px}.feedStack{gap:16px}.feedColumn{max-width:680px}.threeColumn{grid-template-columns:220px minmax(0,680px) 250px}.composerIntro{border-radius:10px;box-shadow:0 1px 2px rgba(0,0,0,.12)}.postDetail{border-radius:10px}.postDetail .detailCaption{padding:2px 16px 12px;font-size:15px;line-height:1.38;color:#050505}.postDetail .cardHeader{padding:12px 16px 8px}.postDetail .avatar{width:40px;height:40px;border-radius:50%;font-size:16px}.postDetail .author{font-size:15px}.postDetail .meta{font-size:12px;color:#65676b}.postTitle,.detailTitle{display:none!important}
 
 @media(max-width:760px){body{background:#f0f2f5}.pageShell{padding:8px 0 64px}.feedColumn{max-width:none;width:100%}.feedStack{gap:8px}.facebookPost,.composerIntro{border-left:0;border-right:0;border-radius:0}.facebookHeader{padding:10px 12px 7px}.facebookCaptionLink{padding:2px 12px 11px}.facebookCaption{font-size:15px}.facebookPost .mediaCell{min-height:220px}.reactionSummary{padding-left:12px;padding-right:12px}.fbActionRow{padding:3px 6px}.fbAction{font-size:13px;min-height:44px}.singlePageShell{padding:8px 0 64px}.singlePageShell .backLink{margin:8px 12px 12px}.postDetail{border-left:0;border-right:0;border-radius:0}.postDetail .detailCaption{padding:2px 12px 11px}.topbarInner{padding:0 12px}.topnav{overflow-x:auto;max-width:65vw;scrollbar-width:none}.topnav::-webkit-scrollbar{display:none}}
+
+/* Kiocreates post menu: visually align the ellipsis with the profile header.
+   Keep the tap target accessible, but never draw the circular target/background. */
+.postMenuButton{
+  align-self:flex-start;
+  width:34px;
+  height:30px;
+  margin:-2px -4px 0 0;
+  padding:0;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:0;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent;
+  font-size:0;
+  line-height:1;
+  letter-spacing:0;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.postMenuButton::before{
+  content:'•••';
+  color:#65676b;
+  font-size:18px;
+  font-weight:700;
+  line-height:1;
+  letter-spacing:1px;
+  position:relative;
+  top:-4px;
+}
+.postMenuButton:hover,.postMenuButton:active{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.postMenuButton:focus{outline:none}
+.postMenuButton:focus-visible{outline:2px solid rgba(100,92,255,.45);outline-offset:2px}
+@media(max-width:760px){
+  .postMenuButton{margin:-3px -3px 0 0;width:32px;height:30px}
+  .postMenuButton::before{top:-4px;font-size:18px}
+}
